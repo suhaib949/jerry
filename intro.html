@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Header</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: url('https://source.unsplash.com/random/1600x900') no-repeat center center/cover;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Styles */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            
+            
+            padding: 15px 5%;
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Logo */
+        .logo {
+            color: rgb(255, 255, 255);
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* Navigation Links */
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-links li {
+            display: inline;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 18px;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .nav-links a:hover {
+            color: #ED5C15;
+        }
+
+        /* Mobile Menu Button */
+        .menu-toggle {
+            display: none;
+            font-size: 24px;
+            color: rgb(255, 255, 255);
+            cursor: pointer;
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) { /* Tablet */
+            .header {
+                flex-direction: column;
+                text-align: center;
+                padding: 10px;
+                background-color: #ffffff;
+                color: #000000;
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+
+            .logo {
+                font-size: 20px;
+                margin-bottom: 10px;
+            }
+        }
+
+        @media screen and (max-width: 480px) { /* Mobile */
+    .header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between; /* Logo left & Toggle right */
+        align-items: center;
+        padding: 10px 15px; /* Spacing for better look */
+        color: #000000;
+
+    }
+
+    .logo {
+        font-size: 20px;
+        margin-bottom: 0; /* Remove extra space */
+        color: #ED5C15;
+    }
+
+    .menu-toggle {
+        display: inline-block;
+        color: #ED5C15;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        gap: 10px;
+        display: none; /* Initially hide the menu */
+        position: absolute;
+        top: 52px;
+        left: 0;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.5); /* Transparent Black */
+            backdrop-filter: blur(1px);
+        padding: 20px;
+        text-align: center;
+        
+        
+    }
+    .nav-links a{
+        color: #000000;
+        font-weight: bold;
+        font-size: 14px;
+    }
+    .nav-links a:hover{
+        color:  #ffffff;
+    }
+
+    .nav-links.active {
+        display: flex; /* Show when active */
+        
+    }
+}
+
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            background: url(https://img.freepik.com/free-photo/skogafoss-waterfall-iceland-guy-red-jacket-looks-skogafoss-waterfall_335224-593.jpg?uid=R186096664&ga=GA1.1.1530892501.1735816975&semt=ais_hybrid) no-repeat center center / cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 130px 50px 0px;
+            transition: background-image .1s ease-in-out;
+        }
+
+        .slider-content {
+            max-width: 100%;
+            color: white;
+            position: relative;
+            z-index: 1;
+        }
+
+        .slider-content h1 {
+            font-size: 55px;
+            font-weight: bold;
+        }
+
+        .slider-content p {
+            font-size: 16px;
+            margin: 20px 0;
+        }
+
+        .slider-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+        /* Flexbox layout for the image slider */
+        .slider-images {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            padding: 20px 0px 0px 50px;
+            z-index: 1;
+        }
+
+        /* Image styles */
+        .slider-images img {
+            width: 130px;
+            height: 270px;
+            border-radius: 6px;
+            object-fit: cover;
+            cursor: pointer;
+            flex-shrink: 0; /* Prevent shrinking */
+            transition: transform 2s ease, flex-grow 12s ease; /* Smooth transition for flex-grow */
+        }
+
+        /* Active state for image when it's selected */
+        .slider-images img.active {
+            flex-grow: 4.5; /* Increase size on active */
+            
+        }
+
+        /* Animation to grow the images automatically */
+        @keyframes autoGrow {
+            0%, 100% {
+                flex-grow: 1;
+            }
+            50% {
+        
+                flex-grow: 2.3; /* Grow the image */
+            }
+        }
+
+        /* Search bar styles */
+        .search-bar-container {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .search-wrapper {
+            position: relative;
+            flex: 1;
+        }
+
+        .search-wrapper i {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 19px;
+            color: #bdbdbd;
+            pointer-events: none;
+        }
+
+        .search-wrapper input {
+            width: 100%;
+            padding: 15px 15px 15px 40px;
+            font-size: 1rem;
+            border: none;
+            outline: none;
+            border-radius: 25px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .search-bar-container button {
+            padding: 15px 25px;
+            background-color: #ED5C15;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1rem;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+        .search-bar-container button:hover{
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        
+        /* Tablets & Small Screens (max-width: 1024px) */
+@media (max-width: 1024px) {
+   
+
+    /* Responsive Slider */
+    .slider-container {
+        flex-direction: column;
+        text-align: center;
+        padding: 100px 20px 0;
+        height: auto;
+    }
+
+    .slider-content {
+        max-width: 90%;
+    }
+
+    .slider-images {
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 10px 0;
+    }
+
+    .slider-images img {
+        width: 100px;
+        height: 200px;
+    }
+
+    /* Search Bar */
+    .search-bar-container {
+        flex-direction: column;
+    }
+
+    .search-wrapper input {
+        width: 100%;
+        padding: 10px 100px;
+    }
+
+    .search-bar-container button {
+        width: 100%;
+        padding: 12px;
+    }
+    .header .nav-container {
+        flex-direction: row-reverse;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+}
+
+/* Mobile Devices (max-width: 600px) */
+@media (max-width: 600px) {
+    .header {
+        padding: 10px 15px;
+    }
+
+    .slider-content h1 {
+        font-size: 40px;
+    }
+
+    .slider-content p {
+        font-size: 14px;
+    }
+
+    .slider-images img {
+        width: 80px;
+        height: 160px;
+    }
+}
+/* About Section */
+
+.about-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            max-width: 100%;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            height: 100vh;
+          
+            overflow: hidden;
+            padding: 20px;
+           
+            
+        }
+
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .about-content {
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+            text-align: left;
+        }
+
+        .about-content h2 {
+            font-size: 28px;
+            color: #333;
+        }
+
+        .about-content h3 {
+            font-size: 22px;
+            color: #ED5C15;
+            margin-bottom: 10px;
+        }
+
+        .about-content p {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .about-btn {
+            display: inline-block;
+            background: #ED5C15;
+            color: white;
+            padding: 15px 25px;
+            text-decoration: none;
+            font-size: 18px;
+            border-radius: 25px;
+            transition: 0.3s;
+        }
+
+        .about-btn:hover {
+            background: #ffffff;
+            color: #000000;
+            border: 1px solid;
+            border-color: #ED5C15;
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            .about-section {
+                flex-direction: column;
+                text-align: center;
+                height: fit-content;
+            }
+            .about-btn:hover {
+            background: #ffffff;
+            color: #000000;
+            border: 1px solid;
+            border-color: #ED5C15;
+        }
+
+            .about-content {
+                text-align: center;
+            }
+        }
+        
+/* Services Section */
+.services {
+  padding: 50px 20px;
+  background: #fff;
+  text-align: center;
+}
+
+.services h2 {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+/* Service Boxes */
+.services-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+.service-box {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+  overflow: hidden;
+}
+
+.service-box:hover {
+  transform: translateY(-5px);
+}
+
+/* Service Image */
+.service-box img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px 10px 0 0;
+  margin-bottom: 15px;
+}
+
+/* Service Text */
+.service-box h3 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  color: #ED5C15;
+}
+
+.service-box p {
+  font-size: 1em;
+  color: #555;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .services-container {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .services-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+    </style>
+</head>
+<body>
+
+    <!-- Header Start -->
+    <header class="header">
+        <div class="logo">My Logo</div>
+        <div class="menu-toggle">&#9776;</div> <!-- Menu Icon -->
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </header>
+    <!-- Header End -->
+    <div class="slider-container" id="slider-container">
+        <div class="slider-content">
+            <h1>Why Lorem Ipsum Is Used?</h1>
+            <p>Lorem ipsum dolor sit amet consectetur. Quam sit facilisi nec ac. Arcu ultricies aliquet tortor pellentesque curabitur erat egestas nulla sit.</p>
+            <div class="search-bar-container">
+                <div class="search-wrapper">
+                    <i class="fas fa-filter"></i>
+                    <input type="text" placeholder="Search a destination">
+                </div>
+                <button>
+                    <span>Search</span>
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="slider-images">
+            <img src="https://img.freepik.com/free-photo/madakaripura-waterfall-is-tallest-waterfall-java_335224-388.jpg?uid=R186096664&ga=GA1.1.1530892501.1735816975&semt=ais_hybrid" alt="Image 1" data-bg="https://img.freepik.com/free-photo/madakaripura-waterfall-is-tallest-waterfall-java_335224-388.jpg?uid=R186096664&ga=GA1.1.1530892501.1735816975&semt=ais_hybrid">
+            <img src="https://img.freepik.com/free-photo/blue-villa-beautiful-sea-hotel_1203-5316.jpg?uid=R186096664&ga=GA1.1.1530892501.1735816975&semt=ais_hybrid" alt="Image 2" data-bg="https://img.freepik.com/free-photo/blue-villa-beautiful-sea-hotel_1203-5316.jpg?uid=R186096664&ga=GA1.1.1530892501.1735816975&semt=ais_hybrid">
+            <img src="https://img.freepik.com/free-photo/cool-coffee-india-tea-leaves-forest_1376-24.jpg?uid=R186096664&ga=GA1.1.1530892501.1735816975&semt=ais_hybrid" alt="Image 3" data-bg="https://img.freepik.com/free-photo/cool-coffee-india-tea-leaves-forest_1376-24.jpg?uid=R186096664&ga=GA1.1.1530892501.1735816975&semt=ais_hybrid">
+        </div>
+    </div>
+    <!-- About Section -->
+    <section class="about-section">
+        <div class="about-image">
+            <img src="https://img.freepik.com/free-photo/brown-wooden-dock_198523-110.jpg?uid=R186096664&ga=GA1.1.1530892501.1735816975&semt=ais_hybrid" alt="About Image">
+        </div>
+        <div class="about-content">
+            <h2>About Us</h2>
+            <h3>We Make Dreams Come True</h3>
+            <p>We are dedicated to providing the best services that help individuals and businesses achieve their goals. Our team of experts ensures that you get top-notch solutions tailored to your needs.</p>
+            <a href="#" class="about-btn">Learn More</a>
+        </div>
+    </section>
+    <!-- services section -->
+    <section class="services">
+        <h2>Our Services</h2>
+        <div class="services-container">
+          <div class="service-box">
+            <img src="https://img.freepik.com/free-photo/beautiful-old-tree-grown-edge-rock-with-amazing-clouds-side-sunlight_181624-2512.jpg?uid=R186096664&ga=GA1.1.1530892501.1735816975&semt=ais_hybrid" alt="Web Development">
+            <h3>Web Development</h3>
+            <p>We create modern and responsive websites.</p>
+          </div>
+          <div class="service-box">
+            <img src="https://img.freepik.com/free-photo/beautiful-old-tree-grown-edge-rock-with-amazing-clouds-side-sunlight_181624-2512.jpg?uid=R186096664&ga=GA1.1.1530892501.1735816975&semt=ais_hybrid" alt="App Development">
+            <h3>App Development</h3>
+            <p>Build powerful and user-friendly mobile apps.</p>
+          </div>
+          <div class="service-box">
+            <img src="https://img.freepik.com/free-photo/beautiful-old-tree-grown-edge-rock-with-amazing-clouds-side-sunlight_181624-2512.jpg?uid=R186096664&ga=GA1.1.1530892501.1735816975&semt=ais_hybrid" alt="SEO Optimization">
+            <h3>SEO Optimization</h3>
+            <p>Improve your site's ranking on search engines.</p>
+          </div>
+          <div class="service-box">
+            <img src="https://img.freepik.com/free-photo/beautiful-old-tree-grown-edge-rock-with-amazing-clouds-side-sunlight_181624-2512.jpg?uid=R186096664&ga=GA1.1.1530892501.1735816975&semt=ais_hybrid" alt="SEO Optimization">
+            <h3>SEO Optimization</h3>
+            <p>Improve your site's ranking on search engines.</p>
+          </div>
+          <div class="service-box">
+            <img src="https://img.freepik.com/free-photo/beautiful-old-tree-grown-edge-rock-with-amazing-clouds-side-sunlight_181624-2512.jpg?uid=R186096664&ga=GA1.1.1530892501.1735816975&semt=ais_hybrid" alt="SEO Optimization">
+            <h3>SEO Optimization</h3>
+            <p>Improve your site's ranking on search engines.</p>
+          </div>
+          <div class="service-box">
+            <img src="https://img.freepik.com/free-photo/beautiful-old-tree-grown-edge-rock-with-amazing-clouds-side-sunlight_181624-2512.jpg?uid=R186096664&ga=GA1.1.1530892501.1735816975&semt=ais_hybrid" alt="SEO Optimization">
+            <h3>SEO Optimization</h3>
+            <p>Improve your site's ranking on search engines.</p>
+          </div>
+          <div class="service-box">
+            <img src="https://img.freepik.com/free-photo/beautiful-old-tree-grown-edge-rock-with-amazing-clouds-side-sunlight_181624-2512.jpg?uid=R186096664&ga=GA1.1.1530892501.1735816975&semt=ais_hybrid" alt="SEO Optimization">
+            <h3>SEO Optimization</h3>
+            <p>Improve your site's ranking on search engines.</p>
+          </div>
+          <div class="service-box">
+            <img src="https://img.freepik.com/free-photo/beautiful-old-tree-grown-edge-rock-with-amazing-clouds-side-sunlight_181624-2512.jpg?uid=R186096664&ga=GA1.1.1530892501.1735816975&semt=ais_hybrid" alt="SEO Optimization">
+            <h3>SEO Optimization</h3>
+            <p>Improve your site's ranking on search engines.</p>
+          </div>
+        </div>
+      </section>
+      
+
+  
+
+    <!-- JavaScript for Mobile Toggle Menu -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const menuToggle = document.querySelector(".menu-toggle");
+            const navLinks = document.querySelector(".nav-links");
+
+            menuToggle.addEventListener("click", function () {
+                navLinks.classList.toggle("active");
+            });
+        });
+        const sliderContainer = document.getElementById('slider-container');
+    const thumbnailImages = document.querySelectorAll('.slider-images img');
+
+    let currentIndex = 0;
+    const images = Array.from(thumbnailImages).map(img => img.getAttribute('data-bg'));
+    let slideInterval;
+
+    // Create an overlay div for sliding effect
+    const slideOverlay = document.createElement('div');
+    slideOverlay.classList.add('slide-overlay');
+    sliderContainer.appendChild(slideOverlay);
+
+    // Function to change the background with a slide effect from left
+    function changeSlide(index) {
+        if (index === currentIndex) return; // Prevent unnecessary animation
+
+        // Set overlay background
+        slideOverlay.style.backgroundImage = `url('${images[index]}')`;
+        slideOverlay.classList.add('slide-in-left');
+
+        // After animation completes, update the main background
+        setTimeout(() => {
+            sliderContainer.style.backgroundImage = `url('${images[index]}')`;
+            slideOverlay.classList.remove('slide-in-left');
+        }, 500); // Match CSS animation duration
+
+        // Remove active class from all images
+        thumbnailImages.forEach(img => img.classList.remove('active'));
+        thumbnailImages[index].classList.add('active');
+
+        currentIndex = index; // Update index
+    }
+
+    // Auto-slide functionality
+    function startAutoSlide() {
+        slideInterval = setInterval(() => {
+            let nextIndex = (currentIndex + 1) % images.length;
+            changeSlide(nextIndex);
+        }, 5000); // Change every 5 seconds
+    }
+
+    // Add click event to images to manually change the background
+    thumbnailImages.forEach((img, index) => {
+        img.addEventListener('click', () => {
+            changeSlide(index); // Change the background when an image is clicked
+            clearInterval(slideInterval); // Stop auto-slide
+            startAutoSlide(); // Restart auto-slide
+        });
+    });
+
+    // Start the auto-slide initially
+    startAutoSlide();
+
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('nav-links');
+
+hamburger.addEventListener('click', () => {
+    console.log('Hamburger clicked'); // Debugging
+    navLinks.classList.toggle('active');
+
+    // Check if menu is open
+    if (navLinks.classList.contains('active')) {
+        navLinks.style.left = "0"; // Ensure menu is visible
+    } else {
+        navLinks.style.left = "-100%"; // Hide menu when closing
+    }
+});
+
+// Close menu when clicking a link
+document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+        console.log('Nav link clicked'); // Debugging
+        navLinks.classList.remove('active');
+        navLinks.style.left = "-100%";
+    });
+});
+    </script>
+
+</body>
+</html>
